@@ -50,6 +50,7 @@ public class Main {
                     1... Print inventory
                     2... Change Stock
                     3... Change price
+                    4... Calculate basket price
                     
                     0... Quit
                     """);
@@ -66,6 +67,9 @@ public class Main {
                     break;
                 case 3:
                     setPrice(items);
+                    break;
+                case 4:
+                    calculateBasket(items);
                     break;
                 case 0:
                     return;
@@ -231,6 +235,106 @@ public class Main {
         selectedItemToChange.setUnitPrice(newAmount);
 
         RammTools.printToConsole("Price successfully updated!", false);
+    }
+
+    private static void calculateBasket(ArrayList<Item> items) {
+        int amountToAdd = 0;
+        RammTools.clearConsole();
+        printItems(items);
+        RammTools.printToConsole("\nPlease enter the item number of the first item you wish to add to your basket.", false);
+        System.out.print("Item number: ");
+        Item itemToAdd = null;
+        int itemNumber = input.nextInt();
+        input.nextLine();
+
+        ArrayList<Item> basketItems = new ArrayList<>();
+
+        for (Item item : items) {
+            if (item.getItemNumber() == itemNumber) {
+                itemToAdd = item;
+                RammTools.printToConsole("Succes!", true);
+                RammTools.printToConsole(item.getItemDescription() + " has been added to the cart.", false);
+                RammTools.printToConsole("\nHow many (" + item.getItemDescription() + ") do you wish to add to your cart?", false);
+                System.out.print(item.getItemDescription() + " x ");
+                amountToAdd = input.nextInt();
+                input.nextLine();
+
+                for (int n = 0; n < amountToAdd; n++) {
+                    basketItems.add(itemToAdd);
+                }
+            }
+        }
+        if (itemToAdd == null) {
+            RammTools.printToConsole("No item with that number was found.");
+        }
+        boolean makingBasket = true;
+        while (makingBasket) {
+            RammTools.clearConsole();
+            RammTools.printToConsole("---------- BASKET ----------");
+            printBasket(basketItems);
+            RammTools.printToConsole("""
+                    \n---------- BASKET CALCULATOR ----------
+                    1... Add another item
+                    2... Calculate now
+                    """, false);
+            int userInput = input.nextInt();
+            input.nextLine();
+
+            switch (userInput) {
+                case 1:
+                    amountToAdd = 0;
+                    RammTools.clearConsole();
+                    printItems(items);
+                    RammTools.printToConsole("Please enter the item number of the item you wish to add to your basket.");
+                    System.out.print("Item number: ");
+                    itemToAdd = null;
+                    itemNumber = input.nextInt();
+                    input.nextLine();
+
+                    for (Item item : items) {
+                        if (item.getItemNumber() == itemNumber) {
+                            itemToAdd = item;
+                            RammTools.printToConsole("Succes!", true);
+                            RammTools.printToConsole(item.getItemDescription() + " has been added to the cart.", false);
+                            RammTools.printToConsole("\nHow many (" + item.getItemDescription() + ") do you wish to add to your cart?", false);
+                            System.out.print(item.getItemDescription() + " x ");
+                            amountToAdd = input.nextInt();
+                            input.nextLine();
+
+                            for (int n = 0; n < amountToAdd; n++) {
+                                basketItems.add(itemToAdd);
+                            }
+                        }
+                    }
+                    if (itemToAdd == null) {
+                        RammTools.printToConsole("No item with that number was found.");
+                    }
+                    break;
+
+                case 2:
+                    makingBasket = false;
+            }
+
+        }
+
+        printBasket(basketItems);
+        RammTools.waitForUser(input);
+
+
+    }
+
+    private static void printBasket(ArrayList<Item> basketItems) {
+        // PRINT BASKET AND FINAL PRICE
+        double sum = 0;
+        for (Item item : basketItems) {
+            sum += item.getUnitPrice();
+        }
+        RammTools.printToConsole("---------- BASKET ----------");
+        for (Item item : basketItems) {
+            RammTools.printToConsole("1 x " + item.getItemDescription() + " | Price: $" + item.getUnitPrice(), false);
+        }
+        RammTools.printToConsole("----------------------------", false);
+        RammTools.printToConsole("TOTAL: $" + sum, false);
     }
 
 
