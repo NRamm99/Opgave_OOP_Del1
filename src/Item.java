@@ -27,4 +27,8 @@ public class Item {
         return unitPrice;
     }
 
+    public void addQuantity(int amount){
+        this.quantityInStock += amount;
+    }
+
 }
