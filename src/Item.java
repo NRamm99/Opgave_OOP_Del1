@@ -35,4 +35,12 @@ public class Item {
         this.quantityInStock -= amountToRemove;
     }
 
+    public void setQuantity(int newAmount){
+        this.quantityInStock = newAmount;
+    }
+
+    public void setUnitPrice(double newAmount){
+        this.unitPrice = newAmount;
+    }
+
 }

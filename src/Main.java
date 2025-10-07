@@ -49,6 +49,7 @@ public class Main {
                     ---------- MENU ----------
                     1... Print inventory
                     2... Change Stock
+                    3... Change price
                     
                     0... Quit
                     """);
@@ -63,6 +64,9 @@ public class Main {
                 case 2:
                     promptStockMenu(items);
                     break;
+                case 3:
+                    setPrice(items);
+                    break;
                 case 0:
                     return;
                 default:
@@ -72,6 +76,7 @@ public class Main {
         }
 
     }
+
 
     private static void promptStockMenu(ArrayList<Item> items) {
         RammTools.printToConsole("""
@@ -145,7 +150,7 @@ public class Main {
                 printItems(items, itemNumberToRemove);
 
                 RammTools.printToConsole("\nHow much do you want to remove from the stock?", false);
-                System.out.print("+ ");
+                System.out.print("- ");
                 int amountToRemove = input.nextInt();
                 input.nextLine();
 
@@ -153,6 +158,80 @@ public class Main {
 
                 RammTools.printToConsole("Stock successfully updated!", false);
                 break;
+
+
+            case 3:
+                RammTools.clearConsole();
+                printItems(items);
+                RammTools.printToConsole("\nPlease enter the item number you wish to access.", false);
+                System.out.print("Item #: ");
+                int itemNumberToChange = input.nextInt();
+                input.nextLine();
+
+                Item selectedItemToChange = null;
+                for (Item item : items) {
+                    if (item.getItemNumber() == itemNumberToChange) {
+                        selectedItemToChange = item;
+                        break;
+                    }
+                }
+
+                if (selectedItemToChange == null) {
+                    RammTools.printToConsole("No item found with number: " + itemNumberToChange, false);
+                    return;
+                }
+
+                RammTools.clearConsole();
+                printItems(items, itemNumberToChange);
+
+                RammTools.printToConsole("\nHow much do you want to set the current stock to?", false);
+                System.out.print("New stock amount: ");
+                int newAmount = input.nextInt();
+                input.nextLine();
+
+                selectedItemToChange.setQuantity(newAmount);
+
+                RammTools.printToConsole("Stock successfully updated!", false);
+                break;
+
+            default:
+                break;
         }
     }
+
+    private static void setPrice(ArrayList<Item> items) {
+        RammTools.clearConsole();
+        printItems(items);
+        RammTools.printToConsole("\nPlease enter the item number you wish to access.", false);
+        System.out.print("Item #: ");
+        int itemNumberToChange = input.nextInt();
+        input.nextLine();
+
+        Item selectedItemToChange = null;
+        for (Item item : items) {
+            if (item.getItemNumber() == itemNumberToChange) {
+                selectedItemToChange = item;
+                break;
+            }
+        }
+
+        if (selectedItemToChange == null) {
+            RammTools.printToConsole("No item found with number: " + itemNumberToChange, false);
+            return;
+        }
+
+        RammTools.clearConsole();
+        printItems(items, itemNumberToChange);
+
+        RammTools.printToConsole("\nHow much do you want to set the current price to?", false);
+        System.out.print("New price: ");
+        double newAmount = input.nextDouble();
+        input.nextLine();
+
+        selectedItemToChange.setUnitPrice(newAmount);
+
+        RammTools.printToConsole("Price successfully updated!", false);
+    }
+
+
 }
