@@ -27,8 +27,12 @@ public class Item {
         return unitPrice;
     }
 
-    public void addQuantity(int amount){
-        this.quantityInStock += amount;
+    public void addQuantity(int amountToAdd){
+        this.quantityInStock += amountToAdd;
+    }
+
+    public void removeQuantity(int amountToRemove){
+        this.quantityInStock -= amountToRemove;
     }
 
 }

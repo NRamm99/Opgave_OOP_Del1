@@ -91,35 +91,68 @@ public class Main {
                 printItems(items);
                 RammTools.printToConsole("\nPlease enter the item number you wish to access.", false);
                 System.out.print("Item #: ");
-                int itemNumber = input.nextInt();
+                int itemNumberToAdd = input.nextInt();
                 input.nextLine();
 
-                Item selectedItem = null;
+                Item selectedItemToAdd = null;
                 for (Item item : items) {
-                    if (item.getItemNumber() == itemNumber) {
-                        selectedItem = item;
+                    if (item.getItemNumber() == itemNumberToAdd) {
+                        selectedItemToAdd = item;
                         break;
                     }
                 }
 
-                if (selectedItem == null) {
-                    RammTools.printToConsole("No item found with number: " + itemNumber, false);
+                if (selectedItemToAdd == null) {
+                    RammTools.printToConsole("No item found with number: " + itemNumberToAdd, false);
                     return;
                 }
 
                 RammTools.clearConsole();
-                printItems(items, itemNumber);
+                printItems(items, itemNumberToAdd);
 
                 RammTools.printToConsole("\nHow much do you want to add to the stock?", false);
                 System.out.print("+ ");
                 int amountToAdd = input.nextInt();
                 input.nextLine();
 
-                selectedItem.addQuantity(amountToAdd);
+                selectedItemToAdd.addQuantity(amountToAdd);
 
                 RammTools.printToConsole("Stock successfully updated!", false);
                 break;
 
+            case 2:
+                RammTools.clearConsole();
+                printItems(items);
+                RammTools.printToConsole("\nPlease enter the item number you wish to access.", false);
+                System.out.print("Item #: ");
+                int itemNumberToRemove = input.nextInt();
+                input.nextLine();
+
+                Item selectedItemToRemove = null;
+                for (Item item : items) {
+                    if (item.getItemNumber() == itemNumberToRemove) {
+                        selectedItemToRemove = item;
+                        break;
+                    }
+                }
+
+                if (selectedItemToRemove == null) {
+                    RammTools.printToConsole("No item found with number: " + itemNumberToRemove, false);
+                    return;
+                }
+
+                RammTools.clearConsole();
+                printItems(items, itemNumberToRemove);
+
+                RammTools.printToConsole("\nHow much do you want to remove from the stock?", false);
+                System.out.print("+ ");
+                int amountToRemove = input.nextInt();
+                input.nextLine();
+
+                selectedItemToRemove.removeQuantity(amountToRemove);
+
+                RammTools.printToConsole("Stock successfully updated!", false);
+                break;
         }
     }
 }
