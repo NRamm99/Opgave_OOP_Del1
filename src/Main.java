@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         ArrayList<Item> items = new ArrayList<>();
-        
+
         RammTools.clearConsole();
 
         items.add(new Item(1, "White powder", 3, 19.99));
@@ -19,7 +19,7 @@ public class Main {
 
     private static void printItems(ArrayList<Item> items) {
         for (Item item : items) {
-            System.out.println(item);
+            System.out.println("Item #" + item.getItemNumber() + ": " + item.getItemDescription() +  " | Quantity: " + item.getQuantityInStock() + " | Price: $" + item.getUnitPrice());
         }
     }
 }

@@ -11,10 +11,20 @@ public class Item {
         this.unitPrice = unitPrice;
     }
 
-    public String toString() {
-        return "Item #" + itemNumber + ": " + itemDescription +
-                " | Quantity: " + quantityInStock +
-                " | Price: $" + String.format("%.2f", unitPrice);
+    public int getItemNumber(){
+        return itemNumber;
+    }
+
+    public String getItemDescription(){
+        return itemDescription;
+    }
+
+    public int getQuantityInStock(){
+        return quantityInStock;
+    }
+
+    public double getUnitPrice(){
+        return unitPrice;
     }
 
 }
