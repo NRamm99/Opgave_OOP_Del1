@@ -49,8 +49,10 @@ public class Main {
                     ---------- MENU ----------
                     1... Print inventory
                     2... Change Stock
-                    3... Change price
+                    3... Change price of an item
                     4... Calculate basket price
+                    5... Increase all prices
+                    6... Calculate inventory value
                     
                     0... Quit
                     """);
@@ -70,6 +72,12 @@ public class Main {
                     break;
                 case 4:
                     calculateBasket(items);
+                    break;
+                case 5:
+                    increaseAllPrices(items);
+                    break;
+                case 6:
+                    calculateInventory(items);
                     break;
                 case 0:
                     return;
@@ -237,6 +245,17 @@ public class Main {
         RammTools.printToConsole("Price successfully updated!", false);
     }
 
+    private static void calculateInventory(ArrayList<Item> items) {
+        double sum = 0;
+        for (Item item : items ){
+            sum += item.getUnitPrice();
+        }
+        RammTools.printToConsole("---------- STOCK AND PRICES ----------");
+        printItems(items);
+        RammTools.printToConsole("\nTOTAL INVENTORY VALUE: $" + sum,false);
+        RammTools.waitForUser(input);
+    }
+
     private static void calculateBasket(ArrayList<Item> items) {
         int amountToAdd = 0;
         RammTools.clearConsole();
@@ -321,6 +340,19 @@ public class Main {
         RammTools.waitForUser(input);
 
 
+    }
+
+    private static void increaseAllPrices(ArrayList<Item> items) {
+        RammTools.printToConsole("---------- STOCK AND PRICES ----------");
+        printItems(items);
+
+        System.out.print("\n\n\nIncrease all prices by + ");
+        int amountToIncrease = input.nextInt();
+        input.nextLine();
+
+        for (Item item : items){
+            item.setUnitPrice((amountToIncrease + item.getUnitPrice()));
+        }
     }
 
     private static void printBasket(ArrayList<Item> basketItems) {
