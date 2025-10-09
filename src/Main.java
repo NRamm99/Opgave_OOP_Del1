@@ -324,17 +324,26 @@ public class Main {
     }
 
     private static void printBasket(ArrayList<Item> basketItems) {
-        // PRINT BASKET AND FINAL PRICE
+        int DISCOUNT_AMOUNT = 5;
+
         double sum = 0;
+        double sumDiscounted = 0;
         for (Item item : basketItems) {
             sum += item.getUnitPrice();
+            sumDiscounted += item.getUnitPrice();
+            if (item.getQuantityInStock() <= DISCOUNT_AMOUNT){
+                sum += item.getUnitPrice();
+                sumDiscounted += (item.getUnitPrice() * 0.80);
+
+            }
         }
         RammTools.printToConsole("---------- BASKET ----------");
         for (Item item : basketItems) {
             RammTools.printToConsole("1 x " + item.getItemDescription() + " | Price: $" + item.getUnitPrice(), false);
         }
         RammTools.printToConsole("----------------------------", false);
-        RammTools.printToConsole("TOTAL: $" + sum, false);
+        RammTools.printToConsole("BEFORE DISCOUNT | TOTAL: $" + String.format("%.2f", sum), false);
+        RammTools.printToConsole("AFTER DISCOUNT | TOTAL: $" + String.format("%.2f", sumDiscounted), false);
     }
 
 
