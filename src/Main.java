@@ -272,16 +272,18 @@ public class Main {
     private static void calculateInventory(ArrayList<Item> items) {
         double sum = 0;
         for (Item item : items) {
-            sum += item.getUnitPrice();
+            for (int n = 0; n < item.getQuantityInStock(); n++) {
+                sum += item.getUnitPrice();
+            }
         }
         RammTools.printToConsole("---------- STOCK AND PRICES ----------");
         printItems(items);
-        RammTools.printToConsole("\nTOTAL INVENTORY VALUE: $" + sum, false);
+        RammTools.printToConsole("\nTOTAL INVENTORY VALUE: $" + String.format("%.2f", sum), false);
         RammTools.waitForUser(input);
     }
 
     private static void calculateBasket(ArrayList<Item> items) {
-        int amountToAdd = 0;
+        int amountToAdd;
         RammTools.clearConsole();
         printItems(items);
         RammTools.printToConsole("\nPlease enter the item number of the first item you wish to add to your basket.", false);
@@ -325,7 +327,6 @@ public class Main {
 
             switch (userInput) {
                 case 1:
-                    amountToAdd = 0;
                     RammTools.clearConsole();
                     printItems(items);
                     RammTools.printToConsole("Please enter the item number of the item you wish to add to your basket.");
@@ -460,7 +461,7 @@ public class Main {
         System.out.print("\nHow much do you want to change the y value: ");
         double moveY = input.nextDouble();
 
-        for (Point point : points){
+        for (Point point : points) {
             point.move(moveX, moveY);
         }
     }
@@ -578,7 +579,8 @@ public class Main {
         double distance = Math.sqrt(Math.pow((x_2 - x_1), 2) + Math.pow((y_2 - y_1), 2));
 
         RammTools.printToConsole("DISTANCE CALCULATED!");
-        RammTools.printToConsole("Distance: " + String.format("%.2f", distance));
+        RammTools.printToConsole("Distance: " + String.format("%.2f", distance),false);
+        RammTools.waitForUser(input);
     }
 
 
